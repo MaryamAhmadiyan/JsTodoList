@@ -1,0 +1,12 @@
+body{
+    width: 100%;
+    max-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.932);
+      
+}
+input{
+    border: none;
+}
+button{
+    border: none;
+}

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Style/reset.css">
+    <link rel="stylesheet" href="Style/master.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.min.css">
+   
+</head>
+
+<body>
+    <div class="listbox">
+        <input type="text" placeholder="Enter your Tasks">
+        <button>Add Task</button>
+
+    </div>
+    <input id="searchTask" type="text" placeholder="search your task" >
+    <div class="toDoList">
+
+        <ul id="myTask">
+
+        </ul>
+    </div>
+    <audio src="Sounds/ding-101492.mp3" class="hide success"></audio>
+    <audio src="Sounds/Wrong Answer Sound Effect.mp3 " class="hide error"></audio>
+    <footer class="footer">
+        <div class="profile-card">
+            <img src="img/photo22028941016.jpg" alt="">
+        </div>
+        <div class="profile-text">
+            <h2>maryam ahmadiyan</h2>
+            <h4>FrontEnd Developer</h4>
+            <div class="social">
+                <a href="https://www.instagram.com/m_ahmadiyan_dev"><span><i class="ri-instagram-line"></i></span></a>
+                <a href="https://github.com/maryamahmadiyan"><span><i class="ri-github-fill"></i></span></a>
+                <a href="https://search.eitaa.com/?url=https://www.linkedin.com/in/maryamahmadiyandev"><span><i class="ri-linkedin-fill"></i></span></a>
+                <a href="mailto:mrymahmdyan712@gmail.com"><span><i class="ri-mail-line"></i></span></a>
+                
+            </div>
+            
+        </div>
+    </footer>
+
+</body>
+<script>
+    const inp = document.querySelector('.listbox>input')
+    const btn = document.querySelector('.listbox>button')
+    const myTask = document.querySelector('#myTask')
+    const _SuccessSound = document.querySelector('.success')
+    const _ErrorSound = document.querySelector('.error')
+    const searchTask = document.querySelector('#searchTask')
+    // const profileImage = document.querySelector('.footer>.profile-card')
+    // const profileText = document.querySelector('.footer>.profile-text')
+    btn.addEventListener('click', () => {
+        let skipVal = inp.value
+        if (skipVal == '') {
+            alert('task filed is empty')
+        } else {
+            createToDoList(skipVal)
+            searchTask.style.display='flex'
+            inp.value = null
+            inp.focus()
+
+        }
+    })
+    function _delete(s) {
+        (confirm('are you sure delete this task?')) && s.parentElement.remove()
+    }
+    function _edit(s) {
+        // hide //
+        s.classList.add('hide')
+        s.previousElementSibling.classList.add('hide')
+        s.parentElement.children[6].classList.add('hide')
+        s.parentElement.children[7].classList.add('hide')
+        s.parentElement.children[1].classList.add('hide')
+        // hide //
+
+        //show input and button //
+        s.parentElement.children[4].classList.remove('hide')
+        s.parentElement.children[5].classList.remove('hide')
+        // show input and button //
+
+        // change input //
+        let myTemp = s.parentElement.querySelector('h2').innerText
+        s.parentElement.children[4].value = myTemp
+        // change input //
+
+    }
+    // function change Task // ////////////////////////////////////////////
+    function changeTask(s) {
+        s.classList.add('hide')
+        s.previousElementSibling.classList.add('hide')
+
+        let myTemp = s.previousElementSibling.value
+        s.parentElement.children[0].classList.remove('hide')
+        s.parentElement.children[0].innerText = myTemp
+        s.parentElement.children[1].classList.remove('hide')
+        s.parentElement.children[3].classList.remove('hide')
+        s.parentElement.children[2].classList.remove('hide')
+        s.parentElement.children[6].classList.remove('hide')
+        s.parentElement.children[7].classList.remove('hide')
+
+    }
+    // function change Task //////////////////////////////////
+
+    // done task ///////////////////////////////
+    function done(s) {
+        
+        if ( s.dataset.status == 'off') {
+            s.dataset.status = 'on'
+            s.parentElement.style.backgroundColor = 'green'
+            setTimeout(() => {
+                alert('thats great')
+                _SuccessSound.play()
+            }, 1000);
+        }else{
+            s.dataset.status = 'off'
+            s.parentElement.style.backgroundColor='inherit'
+        }
+
+
+    }
+    // done task ///////////////////////////////
+    
+    // not done task /////////////////////////
+    function notDone(s) {
+
+      if( s.dataset.status == 'off'){
+        s.dataset.status = 'on'
+          s.parentElement.style.backgroundColor = 'red'
+        setTimeout(() => {
+            alert('thats bad')
+            _ErrorSound.play()
+        }, 1000);
+      }else{
+        s.dataset.status = 'off'
+        s.parentElement.style.backgroundColor='inherit'
+      }
+    }
+    // not done task /////////////////////////
+
+    function createToDoList(skipVal) {
+        const li = document.createElement('li')
+        li.innerHTML = `
+        <h2>${skipVal}</h2>
+        <textarea style=width:100% height:50px display:block placeholder="descripton" name="" id=""></textarea>
+        <span onclick="_delete(this)" style="cursor:pointer;">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+          width="20" height="20"  
+         fill="none" viewBox="0 0 24 24" 
+         stroke-width="1.5" stroke="currentColor">
+         <path stroke-linecap="round" stroke-linejoin="round" 
+          d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+        </svg>
+        </span>
+
+        <span onclick=_edit(this)>🖊️</span>
+        <input type=text class=hide>
+        <button class=hide onclick=changeTask(this)>save change</button>
+        <span style=cursor:pointer onclick=done(this) data-status=off>✅</span>
+        <span style=cursor:pointer onclick=notDone(this) data-status=off>❌</span>
+        <span onclick=pinToTop(this) style=cursor:pointer>📌</span>
+        `
+        myTask.appendChild(li)
+    }
+
+    searchTask.addEventListener('keyup', (e)=>{
+        let myVal = e.target.value
+        const _h2 = document.querySelectorAll('ul h2')
+        
+        _h2.forEach((value)=>{
+            
+            if(value.innerText.indexOf(myVal) >= 0){
+                // ul 
+                value.parentElement.classList.remove('hide')
+                // ul 
+            }else{
+                value.parentElement.classList.add('hide')
+            }
+        })
+    })
+    function pinToTop(s){
+        // let pt = myTask.computedStyleMap().get('padding-top').value
+        // console.log(pt);
+        // pt +=50
+        // myTask.style.paddingTop=pt+'px'
+        // s.parentElement.classList.add('abs')
+        // s.parentElement.style.top=(pt-100)+'px'
+        const li = s.parentElement
+        myTask.prepend(li)
+        
+    }
+    
+</script>
+
+</html>
