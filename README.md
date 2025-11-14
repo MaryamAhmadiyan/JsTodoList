@@ -1,2 +1,2 @@
 # JsTodoList
-[Live Demo](https://github.com/MaryamAhmadiyan/JsTodoList/blob/main/index.html)
+[Live Demo].(https://maryamahmadiyan.github.io/JsTodoList/).
